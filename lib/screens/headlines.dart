@@ -36,7 +36,7 @@ class _HeadlinesState extends State<Headlines> {
         padding: EdgeInsets.only(top: 14.h, left: 12.w, right: 12.w),
         child: FutureBuilder(
           future: widget.controller.fetchNews(
-            country: 'in',
+            country: 'us',
             category: 'general',
           ),
           builder: (context, snapshot) {

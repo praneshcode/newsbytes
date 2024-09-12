@@ -95,13 +95,13 @@ class _ExploreState extends State<Explore> {
                 },
               ),
             ),
-            SizedBox(height: 16.h),
-            dropDown,
+            // SizedBox(height: 16.h),
+            // dropDown,
             SizedBox(height: 18.h),
             Expanded(
               child: FutureBuilder(
                 future: widget.controller.fetchNews(
-                  country: dropDownValue,
+                  country: 'us',
                   category: selectedCategory,
                 ),
                 builder: (context, snapshot) {
