@@ -24,6 +24,15 @@ class _ExploreState extends State<Explore> {
   String selectedCategory = 'Business';
   String dropDownValue = 'in';
 
+  Map<String, List<News>?> storedNewsMap = {
+    'Business': null,
+    'Technology': null,
+    'Entertainment': null,
+    'Sports': null,
+    'Science': null,
+    'Health': null,
+  };
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -98,33 +107,24 @@ class _ExploreState extends State<Explore> {
             // SizedBox(height: 16.h),
             // dropDown,
             SizedBox(height: 18.h),
-            Expanded(
-              child: FutureBuilder(
-                future: widget.controller.fetchNews(
-                  country: 'us',
-                  category: selectedCategory,
-                ),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    //loading
-                    return const Center(
-                      child: CircularProgressIndicator(
-                        color: ColorConstants.primaryColor,
-                        strokeWidth: 3,
-                      ),
-                    );
-                  } else if (snapshot.hasError) {
-                    //error
-                    return Center(
-                      child: Text(
-                        'Oops, something went wrong.\nPlease try again later.',
-                        textAlign: TextAlign.center,
-                        style: errorTextStyle,
-                      ),
-                    );
-                  } else {
-                    //success
-                    if (widget.controller.getNewsList == null) {
+            if (storedNewsMap[selectedCategory] == null)
+              Expanded(
+                child: FutureBuilder(
+                  future: widget.controller.fetchNews(
+                    country: 'us',
+                    category: selectedCategory,
+                  ),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      //loading
+                      return const Center(
+                        child: CircularProgressIndicator(
+                          color: ColorConstants.primaryColor,
+                          strokeWidth: 3,
+                        ),
+                      );
+                    } else if (snapshot.hasError) {
+                      //error
                       return Center(
                         child: Text(
                           'Oops, something went wrong.\nPlease try again later.',
@@ -132,27 +132,59 @@ class _ExploreState extends State<Explore> {
                           style: errorTextStyle,
                         ),
                       );
-                    }
-                    return ListView.separated(
-                      itemCount: widget.controller.getNewsList!.length,
-                      separatorBuilder: (context, index) =>
-                          Separator(height: 16.h),
-                      itemBuilder: (context, index) {
-                        News news = widget.controller.getNewsList![index];
+                    } else {
+                      //success
+                      storedNewsMap[selectedCategory] =
+                          widget.controller.getNewsList;
 
-                        final bool isLastItem =
-                            index == widget.controller.getNewsList!.length - 1;
-                        return Container(
-                          margin:
-                              isLastItem ? EdgeInsets.only(bottom: 40.h) : null,
-                          child: ExploreCard(news: news),
+                      if (widget.controller.getNewsList == null) {
+                        return Center(
+                          child: Text(
+                            'Oops, something went wrong.\nPlease try again later.',
+                            textAlign: TextAlign.center,
+                            style: errorTextStyle,
+                          ),
                         );
-                      },
+                      }
+
+                      return ListView.separated(
+                        itemCount: widget.controller.getNewsList!.length,
+                        separatorBuilder: (context, index) =>
+                            Separator(height: 16.h),
+                        itemBuilder: (context, index) {
+                          News news = widget.controller.getNewsList![index];
+
+                          final bool isLastItem = index ==
+                              widget.controller.getNewsList!.length - 1;
+                          return Container(
+                            margin: isLastItem
+                                ? EdgeInsets.only(bottom: 40.h)
+                                : null,
+                            child: ExploreCard(news: news),
+                          );
+                        },
+                      );
+                    }
+                  },
+                ),
+              )
+            else
+              Expanded(
+                child: ListView.separated(
+                  itemCount: storedNewsMap[selectedCategory]!.length,
+                  separatorBuilder: (context, index) => Separator(height: 16.h),
+                  itemBuilder: (context, index) {
+                    News news = storedNewsMap[selectedCategory]![index];
+
+                    final bool isLastItem =
+                        index == widget.controller.getNewsList!.length - 1;
+                    return Container(
+                      margin: isLastItem ? EdgeInsets.only(bottom: 40.h) : null,
+                      child: ExploreCard(news: news),
                     );
-                  }
-                },
+                  },
+                ),
               ),
-            ),
           ],
         ),
       ),
