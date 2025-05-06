@@ -46,6 +46,7 @@ dependencies:
   webview_flutter: ^4.7.0
   connectivity_plus: ^6.0.3
   vibration: ^2.0.0
+  device_preview: ^1.2.0
 
 flutter_native_splash:
   android: true
@@ -53,6 +54,10 @@ flutter_native_splash:
 
   color: '#FFFFFF'
   image: 'assets/logo.png'
+
+  android_12:
+    color: '#FFFFFF'
+    image: 'assets/logo_android12.png'
 
 dev_dependencies:
   flutter_test:
@@ -81,6 +86,7 @@ flutter:
     - assets/
     - assets/icons/
     - assets/navbar/
+    - assets/onboarding/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

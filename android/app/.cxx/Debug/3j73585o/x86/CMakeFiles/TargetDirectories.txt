@@ -1,0 +1,2 @@
+C:/Users/prane/VSCodeProjects/newsapp/android/app/.cxx/Debug/3j73585o/x86/CMakeFiles/edit_cache.dir
+C:/Users/prane/VSCodeProjects/newsapp/android/app/.cxx/Debug/3j73585o/x86/CMakeFiles/rebuild_cache.dir

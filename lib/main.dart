@@ -1,3 +1,4 @@
+import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -22,7 +23,14 @@ void main() async {
   }
 
   runApp(
-    ProviderScope(child: MyApp(isFirstLaunch: isFirstLaunch)),
+    ProviderScope(
+      child: DevicePreview(
+        enabled: false,
+        builder: (context) {
+          return MyApp(isFirstLaunch: isFirstLaunch);
+        },
+      ),
+    ),
   );
 }
 
