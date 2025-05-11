@@ -36,7 +36,7 @@ class _SavedState extends ConsumerState<Saved> {
         scrolledUnderElevation: 0,
       ),
       body: Padding(
-        padding: EdgeInsets.only(top: 14.h, left: 12.w, right: 12.w),
+        padding: EdgeInsets.only(top: 14.h),
         child: groupedNews.isEmpty
             ? Center(
                 child: Text(

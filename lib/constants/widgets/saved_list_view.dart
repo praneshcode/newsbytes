@@ -19,7 +19,10 @@ class SavedListView extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SavedDate(savedDate: savedDate),
+        Padding(
+          padding: EdgeInsets.only(left: 12.w),
+          child: SavedDate(savedDate: savedDate),
+        ),
         SizedBox(height: 18.h),
         SizedBox(
           height: 186,
@@ -27,8 +30,13 @@ class SavedListView extends StatelessWidget {
             itemCount: savedNewsList.length,
             scrollDirection: Axis.horizontal,
             separatorBuilder: (context, index) => SizedBox(width: 24.w),
-            itemBuilder: (context, index) =>
-                SavedCard(news: savedNewsList[index]),
+            itemBuilder: (context, index) => Padding(
+              padding: EdgeInsets.only(
+                left: index == 0 ? 12.w : 0,
+                right: index == savedNewsList.length - 1 ? 12.w : 0,
+              ),
+              child: SavedCard(news: savedNewsList[index]),
+            ),
           ),
         ),
       ],
